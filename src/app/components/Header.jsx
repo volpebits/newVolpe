@@ -12,8 +12,7 @@ export default function Header() {
         { href: '/', label: 'Home' },
         { href: '/games', label: 'Jogos' },
         { href: '/news', label: 'Notícias' },
-        { href: '/about', label: 'Sobre' },
-        { href: '/login', label: 'Login'}
+        { href: '/about', label: 'Sobre' }
     ]
 
     return (
@@ -45,8 +44,8 @@ export default function Header() {
                                     key={link.href}
                                     href={link.href}
                                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === link.href
-                                            ? ' text-green-500 border-2'
-                                            : 'text-white hover:text-green-60'
+                                        ? ' text-green-500 border-2'
+                                        : 'text-white hover:text-green-60'
                                         }`}
                                 >
                                     {link.label}
@@ -54,6 +53,12 @@ export default function Header() {
                             ))}
                         </div>
                     </div>
+
+                    {/* Botão de Login */}
+                    <div class="login">
+                        <button onClick={""} class="cursor-pointer text-dark font-bold bg-green-500 hover:bg-green-200 px-5 py-1 rounded-3xl" >Login</button>
+                    </div>
+
 
                     {/* Botão Menu Mobile */}
                     <div className="md:hidden">
@@ -82,8 +87,8 @@ export default function Header() {
                                     href={link.href}
                                     onClick={() => setIsMenuOpen(false)}
                                     className={`block px-3 py-2 rounded-md text-base font-medium ${pathname === link.href
-                                            ? 'bg-green-200 text-black'
-                                            : 'text-black hover:bg-white'
+                                        ? 'bg-green-200 text-black'
+                                        : 'text-black hover:bg-white'
                                         }`}
                                 >
                                     {link.label}
