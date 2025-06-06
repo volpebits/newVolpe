@@ -17,7 +17,7 @@ export default function Header() {
     ]
 
     return (
-        <header className="bg-white shadow-md border-b">
+        <header className="bg-purple-950 shadow-md border-b">
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
 
@@ -27,11 +27,11 @@ export default function Header() {
                             <Image
                                 src="/icons/logo2.png"
                                 alt="Logo"
-                                width={32}
-                                height={32}
+                                width={48}
+                                height={48}
                                 className="rounded"
                             />
-                            <span className="text-2xl font-bold text-blue-600">
+                            <span className="text-3xl font-bold text-green-500">
                                 Volpe
                             </span>
                         </Link>
@@ -45,8 +45,8 @@ export default function Header() {
                                     key={link.href}
                                     href={link.href}
                                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === link.href
-                                            ? 'bg-blue-100 text-blue-700'
-                                            : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                                            ? ' text-green-500 border-2'
+                                            : 'text-white hover:text-green-60'
                                         }`}
                                 >
                                     {link.label}
@@ -59,9 +59,9 @@ export default function Header() {
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-gray-600 hover:text-blue-600 focus:outline-none"
+                            className="text-white hover:text-green-500 focus:outline-none"
                         >
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 {isMenuOpen ? (
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 ) : (
@@ -82,8 +82,8 @@ export default function Header() {
                                     href={link.href}
                                     onClick={() => setIsMenuOpen(false)}
                                     className={`block px-3 py-2 rounded-md text-base font-medium ${pathname === link.href
-                                            ? 'bg-blue-100 text-blue-700'
-                                            : 'text-gray-600 hover:text-blue-600 hover:bg-white'
+                                            ? 'bg-green-200 text-black'
+                                            : 'text-black hover:bg-white'
                                         }`}
                                 >
                                     {link.label}
