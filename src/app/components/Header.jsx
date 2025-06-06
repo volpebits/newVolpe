@@ -55,7 +55,7 @@ export default function Header() {
                     </div>
 
                     {/* Botão de Login */}
-                    <div class="login">
+                    <div class="login hidden md:block">
                         <button onClick={""} class="cursor-pointer text-dark font-bold bg-green-500 hover:bg-green-200 px-5 py-1 rounded-3xl" >Login</button>
                     </div>
 
@@ -94,6 +94,7 @@ export default function Header() {
                                     {link.label}
                                 </Link>
                             ))}
+                            <button onClick={""} class="cursor-pointer text-dark font-bold bg-green-500 hover:bg-green-200 px-5 py-1 rounded-3xl" >Login</button>
                         </div>
                     </div>
                 )}
