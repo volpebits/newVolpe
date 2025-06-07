@@ -32,7 +32,7 @@ export default function SlidePanel() {
         }`}
       >
         {/* Header */}
-        <div className="p-9 flex justify-between items-start">
+        <div className="p- flex justify-between items-start">
           <div>
             <h2 className="text-2xl font-bold text-green-500">Crie uma conta</h2>
             <p className="text-sm text-gray-400 mt-1">
