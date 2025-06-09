@@ -1,29 +1,219 @@
-/*
- * Para usar a integração com Google, adicione no seu _document.js ou layout:
- * 
- * <Script src="https://accounts.google.com/gsi/client" />
- * 
- * E configure seu Google Client ID no Google Cloud Console:
- * 1. Vá para https://console.cloud.google.com/
- * 2. Crie um projeto ou selecione um existente
- * 3. Ative a Google Identity API
- * 4. Configure as credenciais OAuth 2.0
- * 5. Substitua "SEU_GOOGLE_CLIENT_ID" pelo seu Client ID real
- */
-
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Eye, EyeOff, X, ArrowLeft } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
+
+// Seu Google Client ID
+const GOOGLE_CLIENT_ID = "306605130597-nkfa413h7gsk17nhja0rc7dvnqp95fqs.apps.googleusercontent.com";
+
+// Substitua pela sua chave do reCAPTCHA v2
+const RECAPTCHA_SITE_KEY = "6LeD-lkrAAAAAAH-MIkw8XQjvInNV5CEjwOKUd7c";
 
 export default function SlidePanel({ isOpen, setIsOpen }) {
-    const [authMode, setAuthMode] = useState('login'); // 'login', 'register', 'forgot-password'
+    const [authMode, setAuthMode] = useState('login');
     const [showPassword, setShowPassword] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
+    const [isRecaptchaLoaded, setIsRecaptchaLoaded] = useState(false);
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
 
     const isLogin = authMode === 'login';
     const isRegister = authMode === 'register';
     const isForgotPassword = authMode === 'forgot-password';
+
+    // Inicializar Google OAuth e reCAPTCHA quando o componente montar
+    useEffect(() => {
+        const initGoogleAuth = () => {
+            if (window.google && window.google.accounts) {
+                try {
+                    window.google.accounts.id.initialize({
+                        client_id: GOOGLE_CLIENT_ID,
+                        callback: handleGoogleCallback,
+                        auto_select: false,
+                        cancel_on_tap_outside: true,
+                        use_fedcm_for_prompt: false,
+                        ux_mode: 'popup',
+                        itp_support: true,
+                    });
+                    setIsGoogleLoaded(true);
+                    console.log('Google OAuth inicializado com sucesso');
+                } catch (error) {
+                    console.warn('Erro ao inicializar Google OAuth:', error);
+                    setIsGoogleLoaded(true);
+                }
+            } else {
+                setTimeout(initGoogleAuth, 500);
+            }
+        };
+
+        const initRecaptcha = () => {
+            if (window.grecaptcha && window.grecaptcha.render) {
+                setIsRecaptchaLoaded(true);
+                console.log('reCAPTCHA inicializado com sucesso');
+            } else {
+                setTimeout(initRecaptcha, 500);
+            }
+        };
+
+        // Carregar o script do Google se não estiver carregado
+        if (!window.google) {
+            const script = document.createElement('script');
+            script.src = 'https://accounts.google.com/gsi/client';
+            script.async = true;
+            script.defer = true;
+            script.onload = initGoogleAuth;
+            script.onerror = () => {
+                console.error('Falha ao carregar script do Google');
+                setIsGoogleLoaded(false);
+            };
+            document.head.appendChild(script);
+        } else {
+            initGoogleAuth();
+        }
+
+        // Carregar reCAPTCHA se não estiver carregado
+        if (!window.grecaptcha) {
+            const recaptchaScript = document.createElement('script');
+            recaptchaScript.src = 'https://www.google.com/recaptcha/api.js';
+            recaptchaScript.async = true;
+            recaptchaScript.defer = true;
+            recaptchaScript.onload = initRecaptcha;
+            recaptchaScript.onerror = () => {
+                console.error('Falha ao carregar reCAPTCHA');
+                setIsRecaptchaLoaded(false);
+            };
+            document.head.appendChild(recaptchaScript);
+        } else {
+            initRecaptcha();
+        }
+
+        return () => {
+            try {
+                if (window.google && window.google.accounts) {
+                    window.google.accounts.id.cancel();
+                }
+            } catch (error) {
+                console.warn('Erro no cleanup:', error);
+            }
+        };
+    }, []);
+
+    // Callback para processar a resposta do Google
+    const handleGoogleCallback = async (response) => {
+        try {
+            console.log('Google Login Success:', response);
+            
+            const payload = JSON.parse(atob(response.credential.split('.')[1]));
+            
+            console.log('User Info:', {
+                email: payload.email,
+                name: payload.name,
+                picture: payload.picture,
+                sub: payload.sub
+            });
+
+            alert(`Login realizado com sucesso!\nBem-vindo, ${payload.name}!`);
+            setIsOpen(false);
+            
+        } catch (error) {
+            console.error('Erro ao processar login do Google:', error);
+            alert('Erro ao fazer login com Google. Tente novamente.');
+        }
+    };
+
+    // Função para lidar com o reCAPTCHA
+    const handleRecaptchaChange = (token) => {
+        setRecaptchaToken(token);
+        console.log('reCAPTCHA token:', token);
+    };
+
+    const handleRecaptchaExpired = () => {
+        setRecaptchaToken(null);
+        console.log('reCAPTCHA expirado');
+    };
+
+    // Renderizar reCAPTCHA quando necessário
+    useEffect(() => {
+        if (isRecaptchaLoaded && isRegister && isOpen) {
+            const recaptchaContainer = document.getElementById('recaptcha-container');
+            if (recaptchaContainer && !recaptchaContainer.hasChildNodes()) {
+                try {
+                    window.grecaptcha.render('recaptcha-container', {
+                        sitekey: RECAPTCHA_SITE_KEY,
+                        callback: handleRecaptchaChange,
+                        'expired-callback': handleRecaptchaExpired,
+                        'error-callback': () => {
+                            console.error('Erro no reCAPTCHA');
+                            setRecaptchaToken(null);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Erro ao renderizar reCAPTCHA:', error);
+                }
+            }
+        }
+    }, [isRecaptchaLoaded, isRegister, isOpen]);
+
+    // CORREÇÃO 3: Função simplificada para login com Google
+    const handleGoogleLogin = () => {
+        if (window.google && window.google.accounts && isGoogleLoaded) {
+            try {
+                // Método mais direto - cria um botão temporário e dispara o clique
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'fixed';
+                tempContainer.style.top = '-9999px';
+                tempContainer.style.left = '-9999px';
+                document.body.appendChild(tempContainer);
+
+                window.google.accounts.id.renderButton(tempContainer, {
+                    theme: 'outline',
+                    size: 'large',
+                    width: '300',
+                    // CORREÇÃO 4: Configurações específicas para evitar FedCM
+                    type: 'standard',
+                    shape: 'rectangular',
+                    logo_alignment: 'left',
+                    ux_mode: 'popup' // Força popup
+                });
+
+                // Simular clique no botão
+                setTimeout(() => {
+                    const button = tempContainer.querySelector('div[role="button"]');
+                    if (button) {
+                        button.click();
+                    }
+                    // Limpar o elemento temporário
+                    setTimeout(() => {
+                        if (document.body.contains(tempContainer)) {
+                            document.body.removeChild(tempContainer);
+                        }
+                    }, 1000);
+                }, 100);
+
+            } catch (error) {
+                console.error('Erro ao iniciar login Google:', error);
+                alert('Erro ao conectar com Google. Tente novamente.');
+            }
+        } else {
+            alert('Google OAuth ainda não foi carregado. Tente novamente em alguns segundos.');
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        // Validar reCAPTCHA apenas no registro
+        if (isRegister && !recaptchaToken) {
+            alert('Por favor, complete o reCAPTCHA');
+            return;
+        }
+
+        // Aqui você processaria o formulário
+        console.log('Formulário enviado:', {
+            mode: authMode,
+            recaptchaToken: recaptchaToken
+        });
+        
+        alert(`${authMode === 'login' ? 'Login' : authMode === 'register' ? 'Cadastro' : 'Recuperação'} realizado com sucesso!`);
+    };
 
     const handleForgotPassword = () => {
         setAuthMode('forgot-password');
@@ -31,6 +221,8 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
 
     const handleBackToLogin = () => {
         setAuthMode('login');
+        // Limpar token do reCAPTCHA ao mudar de modo
+        setRecaptchaToken(null);
     };
 
     const getTitle = () => {
@@ -45,37 +237,6 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
         if (isForgotPassword) return 'Enviar link de recuperação';
     };
 
-    // Função para login com Google
-    const handleGoogleLogin = async () => {
-        try {
-            // Aqui você implementaria a lógica do Google OAuth
-            // Por exemplo, usando Google Identity Services
-            if (window.google) {
-                window.google.accounts.id.prompt();
-            }
-            console.log('Login com Google iniciado');
-        } catch (error) {
-            console.error('Erro no login com Google:', error);
-        }
-    };
-
-    // Função para inicializar o Google Identity Services
-    const initializeGoogleAuth = () => {
-        if (window.google) {
-            window.google.accounts.id.initialize({
-                client_id: "SEU_GOOGLE_CLIENT_ID", // Substitua pelo seu Client ID
-                callback: handleGoogleCallback,
-            });
-        }
-    };
-
-    // Callback do Google OAuth
-    const handleGoogleCallback = (response) => {
-        console.log('Google response:', response);
-        // Aqui você processaria o token JWT retornado pelo Google
-        // e faria a autenticação no seu backend
-    };
-
     return (
         <>
             {/* Overlay */}
@@ -88,8 +249,9 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
 
             {/* Painel deslizante */}
             <div
-                className={`fixed inset-0 z-50 flex font-poppins transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
-                    }`}
+                className={`fixed inset-0 z-50 flex font-poppins transition-transform duration-500 ease-in-out ${
+                    isOpen ? 'translate-x-0' : 'translate-x-full'
+                }`}
             >
                 {/* Parte esquerda clicável */}
                 <div
@@ -110,6 +272,14 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                     {/* Cabeçalho */}
                     <div className="w-full max-w-md mx-auto mt-10 space-y-10 animate-fade-in">
                         <div className="flex items-center space-x-4">
+                            {isRegister && (
+                                <button
+                                    onClick={handleBackToLogin}
+                                    className="text-gray-500 hover:text-gray-700 transition"
+                                >
+                                    <ArrowLeft size={20} />
+                                </button>
+                            )}
                             {isForgotPassword && (
                                 <button
                                     onClick={handleBackToLogin}
@@ -131,7 +301,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
 
                     {/* Formulário */}
                     <div className="w-full max-w-md mx-auto mt-10 space-y-10 animate-fade-in">
-                        <form className="space-y-6">
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             {/* Campo Nome - apenas no registro */}
                             {isRegister && (
                                 <div>
@@ -144,7 +314,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                                 </div>
                             )}
 
-                            {/* Campo E-mail - presente em todos os modos */}
+                            {/* Campo E-mail */}
                             <div>
                                 <label className="block text-sm text-gray-600 mb-1">
                                     Endereço de e-mail
@@ -156,7 +326,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                                 />
                             </div>
 
-                            {/* Campo Senha - não aparece na recuperação de senha */}
+                            {/* Campo Senha */}
                             {!isForgotPassword && (
                                 <div>
                                     <label className="block text-sm text-gray-600 mb-1">Senha</label>
@@ -197,11 +367,18 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             {/* reCAPTCHA - apenas no registro */}
                             {isRegister && (
                                 <>
-                                    <ReCAPTCHA
-                                        sitekey="6LeD-lkrAAAAAAH-MIkw8XQjvInNV5CEjwOKUd7c"
-                                        onChange={(value) => setIsChecked(!!value)}
-                                        className="mt-2"
-                                    />
+                                    <div className="mt-4">
+                                        <div 
+                                            id="recaptcha-container" 
+                                            className="flex justify-center"
+                                        >
+                                            {!isRecaptchaLoaded && (
+                                                <div className="border border-gray-300 p-4 rounded-lg bg-gray-50 text-center text-gray-500">
+                                                    Carregando reCAPTCHA...
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                     <p className="text-xs text-gray-500">
                                         Ao criar uma conta, você concorda com os nossos{' '}
                                         <a href="#" className="text-green-500 underline">
@@ -223,7 +400,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                                 {getButtonText()}
                             </button>
 
-                            {/* Divisor "OU" - apenas para login e registro */}
+                            {/* Divisor "OU" */}
                             {!isForgotPassword && (
                                 <div className="relative flex items-center justify-center">
                                     <div className="border-t border-gray-300 w-full"></div>
@@ -232,24 +409,30 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                                 </div>
                             )}
 
-                            {/* Botão Google - apenas para login e registro */}
+                            {/* Botão Google */}
                             {!isForgotPassword && (
                                 <button
                                     type="button"
                                     onClick={handleGoogleLogin}
-                                    className="w-full flex items-center justify-center gap-3 bg-white border-2 border-green-500 text-gray-700 py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-md"
+                                    disabled={!isGoogleLoaded}
+                                    className={`w-full flex items-center justify-center gap-3 bg-white border-2 border-green-500 text-gray-700 py-4 rounded-full transition-all duration-300 hover:bg-gray-50 hover:shadow-md ${
+                                        !isGoogleLoaded ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+                                    }`}
                                 >
                                     <svg className="w-5 h-5" viewBox="0 0 24 24">
-                                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                                     </svg>
-                                    {isLogin ? 'Entrar com Google' : 'Cadastrar com Google'}
+                                    {isGoogleLoaded 
+                                        ? (isLogin ? 'Entrar com Google' : 'Cadastrar com Google')
+                                        : 'Carregando Google...'
+                                    }
                                 </button>
                             )}
 
-                            {/* Links de navegação - não aparecem na recuperação de senha */}
+                            {/* Links de navegação */}
                             {!isForgotPassword && (
                                 <div className="register">
                                     <p className="text-sm text-gray-600 text-center">
