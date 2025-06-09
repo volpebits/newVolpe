@@ -3,17 +3,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import SlidePanel from './login'
 
 export default function Header() {
     const pathname = usePathname()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-
     const navLinks = [
         { href: '/', label: 'Home' },
         { href: '/games', label: 'Jogos' },
         { href: '/news', label: 'Notícias' },
         { href: '/about', label: 'Sobre' }
     ]
+
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
 
     return (
         <header className="bg-purple-950 shadow-md border-b">
@@ -55,9 +57,12 @@ export default function Header() {
                     </div>
 
                     {/* Botão de Login */}
-                    <div class="login hidden md:block">
-                        <button onClick={""} class="cursor-pointer text-dark font-bold bg-green-500 hover:bg-green-200 px-5 py-1 rounded-3xl" >Login</button>
-                    </div>
+                    <button 
+                        onClick={() => setIsLoginOpen(true)}
+                        className="px-4 py-2 bg-gradient-to-r from-green-400 to-green-700 text-white rounded-4xl transition-all duration-300 hover:scale-105 hover:shadow-md hidden md:block"
+                    >
+                        Login
+                    </button>
 
 
                     {/* Botão Menu Mobile */}
@@ -94,11 +99,12 @@ export default function Header() {
                                     {link.label}
                                 </Link>
                             ))}
-                            <button onClick={""} class="cursor-pointer text-dark font-bold bg-green-500 hover:bg-green-200 px-5 py-1 rounded-3xl" >Login</button>
+                            <button onClick={() => setIsLoginOpen(true)} class="cursor-pointer bg-gradient-to-r from-green-400 to-green-700 text-white rounded-4xl transition-all duration-300 px-4 py-1 ml-2 hover:scale-105 hover:shadow-md" >Login</button>
                         </div>
                     </div>
                 )}
             </nav>
+            <SlidePanel isOpen={isLoginOpen} setIsOpen={setIsLoginOpen} />
         </header>
     )
 }
