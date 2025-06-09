@@ -99,7 +99,7 @@ export default function Header() {
                                     {link.label}
                                 </Link>
                             ))}
-                            <button onClick={() => setIsLoginOpen(true)} class="cursor-pointer bg-gradient-to-r from-green-400 to-green-700 text-white rounded-4xl transition-all duration-300 px-4 py-1 ml-2 hover:scale-105 hover:shadow-md" >Login</button>
+                            <button onClick={() => setIsLoginOpen(true)} className="cursor-pointer bg-gradient-to-r from-green-400 to-green-700 text-white rounded-4xl transition-all duration-300 px-4 py-1 hover:scale-105 hover:shadow-md" >Login</button>
                         </div>
                     </div>
                 )}
