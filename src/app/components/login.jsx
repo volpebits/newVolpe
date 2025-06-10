@@ -260,7 +260,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                 />
 
                 {/* Conteúdo do painel */}
-                <div className="relative w-full md:w-1/2 bg-white h-screen flex flex-col px-6 py-16 shadow-xl overflow-y-auto">
+                <div className="relative w-full md:w-1/2 bg-white dark:bg-gray-900 h-screen flex flex-col px-6 py-16 shadow-xl overflow-y-auto">
                     {/* Botão fechar */}
                     <button
                         onClick={() => setIsOpen(false)}
@@ -293,7 +293,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             </h2>
                         </div>
                         {isForgotPassword && (
-                            <p className="text-gray-600 text-sm">
+                            <p className="text-gray-600 dark:text-white text-sm">
                                 Digite seu e-mail e enviaremos um link para redefinir sua senha.
                             </p>
                         )}
@@ -305,47 +305,47 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             {/* Campo Nome - apenas no registro */}
                             {isRegister && (
                                 <div>
-                                    <label className="block text-sm text-gray-600 mb-1">Nome</label>
+                                    <label className="block text-sm text-gray-600 dark:text-white mb-1">Nome</label>
                                     <input
                                         type="text"
                                         placeholder="Seu nome"
-                                        className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                                        className="w-full border border-gray-300 text-black px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
                                     />
                                 </div>
                             )}
 
                             {/* Campo E-mail */}
                             <div>
-                                <label className="block text-sm text-gray-600 mb-1">
+                                <label className="block text-sm text-gray-600 dark:text-white mb-1">
                                     Endereço de e-mail
                                 </label>
                                 <input
                                     type="email"
                                     placeholder="seu@email.com"
-                                    className="w-full border border-gray-300 px-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                                    className="w-full border border-gray-300 dark:text-black px-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
                                 />
                             </div>
 
                             {/* Campo Senha */}
                             {!isForgotPassword && (
                                 <div>
-                                    <label className="block text-sm text-gray-600 mb-1">Senha</label>
+                                    <label className="block text-sm text-gray-600 dark:text-white  mb-1">Senha</label>
                                     <div className="relative">
                                         <input
                                             type={showPassword ? 'text' : 'password'}
                                             placeholder="********"
-                                            className="w-full border border-gray-300 px-4 py-3 pr-10 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
+                                            className="w-full border border-gray-300 dark:text-black px-4 py-3 pr-10 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                            className="dark: text-black absolute inset-y-0 right-0 pr-3 flex items-center"
                                         >
                                             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                         </button>
                                     </div>
                                     {isRegister && (
-                                        <p className="text-xs text-gray-500 mt-1">
+                                        <p className="text-xs text-gray-500 text-white mt-1">
                                             Use 8 ou mais caracteres com pelo menos uma letra maiúscula, minúscula,
                                             número e símbolo.
                                         </p>
@@ -379,7 +379,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                                             )}
                                         </div>
                                     </div>
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-black dark:text-white">
                                         Ao criar uma conta, você concorda com os nossos{' '}
                                         <a href="#" className="text-green-500 underline">
                                             Termos de uso
@@ -404,8 +404,8 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             {!isForgotPassword && (
                                 <div className="relative flex items-center justify-center">
                                     <div className="border-t border-gray-300 w-full"></div>
-                                    <span className="bg-white px-4 text-gray-500 text-sm">OU</span>
-                                    <div className="border-t border-gray-300 w-full"></div>
+                                    <span className="  px-4 text--500 text-sm">OU</span>
+                                    <div className="border-t border-gray-300  w-full"></div>
                                 </div>
                             )}
 
@@ -435,7 +435,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             {/* Links de navegação */}
                             {!isForgotPassword && (
                                 <div className="register">
-                                    <p className="text-sm text-gray-600 text-center">
+                                    <p className="text-sm text-gray-600 dark:text-white text-center">
                                         {isLogin ? 'Novo por aqui?' : 'Já possui uma conta?'}{' '}
                                         <button
                                             type="button"
@@ -455,7 +455,7 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
                             {/* Voltar ao login na tela de recuperação */}
                             {isForgotPassword && (
                                 <div className="text-center">
-                                    <p className="text-sm text-gray-600">
+                                    <p className="text-sm text-gray-600 dark:text-white">
                                         Lembrou da sua senha?{' '}
                                         <button
                                             type="button"
@@ -473,4 +473,4 @@ export default function SlidePanel({ isOpen, setIsOpen }) {
             </div>
         </>
     );
-}
+}  
