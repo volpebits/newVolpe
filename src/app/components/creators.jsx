@@ -80,7 +80,7 @@ const FloatingCreatorsCarousel = () => {
     const [isPaused, setIsPaused] = useState(false);
 
     return (
-        <div className="p-10 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-950 overflow-hidden relative flex items-center">
+        <div className="p-5 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-950 overflow-hidden relative flex items-center">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
@@ -88,6 +88,11 @@ const FloatingCreatorsCarousel = () => {
             </div>
 
             <div className="relative z-10 w-full">
+                {/* titulo */}
+                <div className="text-center pb-10 space-y-5">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-500">Por trás dos Controles</h2>
+                    <p className="text-lg md:text-2xl lg:text-3xl font-bold text-white">As mentes brilhantes que estão redefinindo o que significa criar jogos no Brasil.</p>
+                </div>
                 {/* Infinite Carousel Container */}
                 <div
                     className="relative w-full overflow-hidden"

@@ -53,10 +53,6 @@ export default function Home() {
                         />
                     </div>
                 </div>
-                <div className="text max-w-7xl px-4 p-4 md:p-8 lg:p-10 mx-auto bg-purple-300 dark:bg-purple-950 rounded-2xl md:rounded-3xl space-y-3 md:space-y-5">
-                    <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-purple-950 dark:text-green-500">Por trás dos Controles</h2>
-                    <p className="text-lg md:text-2xl lg:text-3xl font-bold text-black dark:text-white">As mentes brilhantes que estão redefinindo o que significa criar jogos no Brasil.</p>
-                </div>
             </div>
             <div className="creator bg-purple-950">
                 {/* criadores */}
