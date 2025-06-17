@@ -9,6 +9,7 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
 
                 {/* Logo e Newsletter */}
+
                 <div className="flex-shrink-0">
                     <Link href="/" className="flex items-center space-x-2">
                         <Image
@@ -25,6 +26,7 @@ const Footer = () => {
                 </div>
 
                 {/* Links de Navegação */}
+
                 <div className="col-span-1 md:col-span-1">
                     <ul className="space-y-1 font-semibold">
                         <li>
@@ -46,6 +48,7 @@ const Footer = () => {
                 </div>
 
                 {/* Links de Contato e Anúncio */}
+
                 <div className="col-span-1 md:col-span-1">
                     <ul className="space-y-1 font-semibold">
                         <li>
@@ -62,6 +65,7 @@ const Footer = () => {
                 </div>
 
                 {/* Links de Termos e Políticas */}
+
                 <div className="col-span-1 md:col-span-1">
                     <ul className="space-y-1 font-semibold">
                         <li>
@@ -84,21 +88,16 @@ const Footer = () => {
             </div>
 
             {/* Ícones de Redes Sociais */}
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 flex justify-start space-x-4">
                 <a href="https://x.com/volpebits" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition duration-300 border border-gray-600 rounded-full p-2">
-                    {/* Ícone para X (Twitter) - Use um componente de ícone como Heroicons ou Feather Icons */}
                     <Image src="/icons/new-twitter.png" alt="Ícone do X" width={24} height={24} />
-
                 </a>
                 <a href="https://discord.gg/DaH48GMWKV" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition duration-300 border border-gray-600 rounded-full p-2">
-                    {/* Ícone para Discord */}
                     <Image src="/icons/discord.png" alt="Ícone do Discord" width={24} height={24} />
-
                 </a>
                 <a href="https://www.instagram.com/volp.ebits/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition duration-300 border border-gray-600 rounded-full p-2">
-                    {/* Ícone para Instagram */}
                     <Image src="/icons/instagram.png" alt="Ícone do Instagram" width={24} height={24} />
-
                 </a>
             </div>
         </footer>
