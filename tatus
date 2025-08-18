@@ -1,0 +1,67 @@
+* [33mc1b99f0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mprofile[m[33m, [m[1;31morigin/profile[m[33m)[m Normalizando finais de linha
+* [33ma401c9a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Primeiro commit de agosto fase5
+* [33mbfe2d26[m[33m ([m[1;31morigin/ziltonn[m[33m)[m feath: Made page of news
+*   [33m8056c0a[m Merge pull request #6 from volpebits/ziltonn
+[33m|[m[34m\[m  
+[33m|[m * [33m8f4858f[m feath:Build a new footer
+[33m|[m * [33m4230d5b[m feath:Build a new footer
+[33m|[m[33m/[m  
+* [33m046ccf7[m feat: update page games
+* [33mace0b82[m fix: cleaned nested git repo
+*   [33m2df9d6d[m Merge pull request #5 from volpebits/games
+[35m|[m[36m\[m  
+[35m|[m *   [33m3274898[m resolve: mantido arquivo do remoto em games/page.jsx
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m * [1;32m\[m   [33mc1a9c99[m Merge branch 'main' of https://github.com/volpebits/newVolpe into games
+[35m|[m [1;33m|[m[1;34m\[m [1;32m\[m  
+[35m|[m * [1;34m|[m [1;32m|[m [33m0c2275e[m  feat: image games page
+* [1;34m|[m [1;34m|[m [1;32m|[m [33m09b94c2[m adicionado o modo escuro, ajustado as imagens, textos e video
+[1;32m|[m [1;34m|[m[1;32m_[m[1;34m|[m[1;32m/[m  
+[1;32m|[m[1;32m/[m[1;34m|[m [1;34m|[m   
+* [1;34m|[m [1;34m|[m   [33m6267b42[m ajustado o texto e as imagens
+[1;35m|[m[1;34m\[m [1;34m\[m [1;34m\[m  
+[1;35m|[m [1;34m|[m [1;34m|[m[1;34m/[m  
+[1;35m|[m [1;34m|[m[1;34m/[m[1;34m|[m   
+[1;35m|[m * [1;34m|[m   [33m903624f[m feat: page about
+[1;35m|[m [31m|[m[32m\[m [1;34m\[m  
+[1;35m|[m [31m|[m * [1;34m\[m   [33m889c990[m Merge pull request #4 from volpebits/dark-login
+[1;35m|[m [31m|[m [1;34m|[m[34m\[m [1;34m\[m  
+[1;35m|[m [31m|[m [1;34m|[m [34m|[m[1;34m/[m  
+[1;35m|[m [31m|[m [1;34m|[m[1;34m/[m[34m|[m   
+[1;35m|[m [31m|[m [1;34m|[m * [33me4d08b7[m feat: Login/Register Dark
+[1;35m|[m [31m|[m [1;34m|[m[1;34m/[m  
+[1;35m|[m * [1;34m/[m [33m4e2e626[m feat: page about
+[1;35m|[m [1;34m|[m[1;34m/[m  
+* [1;34m/[m [33m287cf36[m ajuste dos textos e imagens
+[1;34m|[m[1;34m/[m  
+*   [33m5fb1407[m Merge pull request #3 from volpebits/dark_theme
+[35m|[m[36m\[m  
+[35m|[m * [33m2a5e84a[m feat: dark mode e index page
+[35m|[m[35m/[m  
+* [33m9d31000[m fix: button google api
+* [33ma7ef077[m remove old files
+* [33mc9adc89[m fix: error class button login
+* [33m0c060d3[m feat: linked login in header button
+*   [33m8fec288[m Merge pull request #2 from volpebits/login
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33mfb79f9b[m Finalização da tela de login/register
+[1;31m|[m * [33mccff12e[m feat:image login page
+[1;31m|[m * [33m21766ed[m Salvando alterações no register/page.jsx
+[1;31m|[m * [33m0360591[m feat:image login
+* [1;32m|[m [33m6930920[m new button login menu hamburguer
+* [1;32m|[m [33mb0c8d50[m new button login
+[1;32m|[m[1;32m/[m  
+* [33m00c13d5[m feat: new header
+* [33m1a98ce0[m login link header
+* [33mc984610[m remove folder home
+* [33m8d7fe52[m new header
+*   [33m7cfca7c[m struct projecT
+[1;33m|[m[1;34m\[m  
+[1;33m|[m *   [33mbc843d4[m Merge pull request #1 from volpebits/master
+[1;33m|[m [1;35m|[m[1;36m\[m  
+[1;33m|[m [1;35m|[m * [33mf0bc76f[m feat: new header
+[1;33m|[m [1;35m|[m[1;35m/[m  
+* [1;35m/[m [33m99b199f[m struct project
+[1;35m|[m[1;35m/[m  
+* [33m5baa735[m feat: nuxt files
+* [33m62d9abf[m[33m ([m[1;31morigin/master[m[33m)[m feat:Responsividade games page
