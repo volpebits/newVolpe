@@ -56,6 +56,12 @@ const Footer = () => {
                                 Fale conosco
                             </Link>
                         </li>
+                         <li>
+                            <Link href="/avalienos" className="hover:text-white transition duration-300">
+                                Avalie-nos
+                            </Link>
+                            
+                        </li>
                         <li>
                             <Link href="https://www.instagram.com/volp.ebits/" className="hover:text-white transition duration-300">
                                 Anuncie na Volpe
